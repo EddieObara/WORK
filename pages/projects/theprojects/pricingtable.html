@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing Table</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f7fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 20px;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 40px;
+      color: #333;
+    }
+
+    .pricing-table {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    .plan {
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .plan:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .plan h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #007BFF;
+    }
+
+    .price {
+      font-size: 32px;
+      font-weight: bold;
+      margin: 20px 0;
+      color: #333;
+    }
+
+    .features {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+      color: #555;
+    }
+
+    .features li {
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Our Pricing Plans</h1>
+  <div class="pricing-table">
+    <div class="plan">
+      <h2>Basic</h2>
+      <div class="price">$9/mo</div>
+      <ul class="features">
+        <li>1 Website</li>
+        <li>10 GB Storage</li>
+        <li>Email Support</li>
+      </ul>
+      <a href="#" class="btn">Choose Plan</a>
+    </div>
+    <div class="plan">
+      <h2>Pro</h2>
+      <div class="price">$29/mo</div>
+      <ul class="features">
+        <li>10 Websites</li>
+        <li>100 GB Storage</li>
+        <li>Priority Support</li>
+      </ul>
+      <a href="#" class="btn">Choose Plan</a>
+    </div>
+    <div class="plan">
+      <h2>Premium</h2>
+      <div class="price">$99/mo</div>
+      <ul class="features">
+        <li>Unlimited Websites</li>
+        <li>1 TB Storage</li>
+        <li>24/7 VIP Support</li>
+      </ul>
+      <a href="#" class="btn">Choose Plan</a>
+    </div>
+  </div>
+</body>
+</html>

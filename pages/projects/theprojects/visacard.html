@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Visa Card</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      background: #f2f2f2;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card {
+      width: 350px;
+      height: 220px;
+      background: linear-gradient(135deg, #1a1f71, #3d47d4);
+      color: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      padding: 20px;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .chip {
+      width: 50px;
+      height: 35px;
+      background: gold;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+
+    .card-number {
+      font-size: 20px;
+      letter-spacing: 2px;
+      margin: 15px 0;
+    }
+
+    .card-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .cvv-display {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .logo {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-weight: bold;
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+
+    form {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      width: 350px;
+      gap: 10px;
+    }
+
+    input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="chip"></div>
+    <div class="card-number" id="card-number">**** **** **** 1234</div>
+    <div class="card-info">
+      <div id="card-name">EDDY O.</div>
+      <div id="card-expiry">12/28</div>
+    </div>
+    <div class="cvv-display">CVV: <span id="card-cvv">***</span></div>
+    <div class="logo">VISA</div>
+  </div>
+
+  <form>
+    <input type="text" id="input-name" placeholder="Cardholder Name" />
+    <input type="text" id="input-number" placeholder="Card Number (digits only)" maxlength="16" />
+    <input type="text" id="input-expiry" placeholder="MM/YY" maxlength="5" />
+    <input type="password" id="input-cvv" placeholder="CVV" maxlength="3" />
+  </form>
+
+  <script>
+    const inputName = document.getElementById('input-name');
+    const inputNumber = document.getElementById('input-number');
+    const inputExpiry = document.getElementById('input-expiry');
+    const inputCvv = document.getElementById('input-cvv');
+
+    const cardName = document.getElementById('card-name');
+    const cardNumber = document.getElementById('card-number');
+    const cardExpiry = document.getElementById('card-expiry');
+    const cardCvv = document.getElementById('card-cvv');
+
+    inputName.addEventListener('input', () => {
+      cardName.textContent = inputName.value.toUpperCase() || 'ANNE STANLEY.';
+    });
+
+    inputNumber.addEventListener('input', () => {
+      let raw = inputNumber.value.replace(/\D/g, '').substring(0, 16);
+      let masked = raw.padEnd(16, '*').replace(/(.{4})/g, '$1 ').trim();
+      cardNumber.textContent = masked || '**** **** **** 1234';
+    });
+
+    inputExpiry.addEventListener('input', () => {
+      let value = inputExpiry.value.replace(/[^\d\/]/g, '').substring(0, 5);
+      cardExpiry.textContent = value || '12/28';
+    });
+
+    inputCvv.addEventListener('input', () => {
+      let raw = inputCvv.value.replace(/\D/g, '').substring(0, 3);
+      cardCvv.textContent = '*'.repeat(raw.length).padEnd(3, '*');
+    });
+  </script>
+</body>
+</html>

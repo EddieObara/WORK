@@ -13,34 +13,78 @@
     h1 {
       text-align: center;
       margin-bottom: 40px;
+      font-size: 36px;
+      font-weight: 700;
+      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+    }
+    h1::after {
+      content: '';
+      width: 60px;
+      height: 4px;
+      background-color: #007BFF;
+      display: block;
+      margin: 10px auto 0;
+      border-radius: 2px;
     }
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 30px;
     }
     .project {
+      position: relative;
       background: white;
       border-radius: 10px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
       cursor: pointer;
       text-decoration: none;
       color: inherit;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .project:hover {
       transform: scale(1.03);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
     }
     .project img {
       width: 100%;
       height: 200px;
       object-fit: cover;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .project:hover img {
+      transform: scale(1.05);
+      filter: brightness(0.8);
     }
     .project-title {
-      padding: 15px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 10px 15px;
       font-size: 18px;
       font-weight: bold;
+      text-align: center;
+      transition: background 0.3s ease;
+    }
+    .project:hover .project-title {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    @media (max-width: 900px) {
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .gallery {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -49,12 +93,14 @@
   <h1>My Projects</h1>
 
   <div class="gallery">
-    <a href="card.html" class="project">
-      <img src="images/visa-card-preview.png" alt="Visa Card Project">
-      <div class="project-title">Interactive Visa Card</div>
-    </a>
-    <a href="product-preview.html" class="project">
-      <img src="images/product-preview.png" alt="Product Preview Card">
+    <!-- Correct relative link to theprojects folder -->
+<a href="theprojects/visacard.html" class="project">
+  <img src="../../images/visa-card-preview.png" alt="Visa Card Project">
+  <div class="project-title">Interactive Visa Card</div>
+</a>
+
+    <a href="../../theprojects/pricingtable.html" class="project">
+      <img src="../../images/product-preview.png" alt="Product Preview Card">
       <div class="project-title">Product Preview Card</div>
     </a>
     <!-- Add more projects here -->
