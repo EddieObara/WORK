@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQ Accordion</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .accordion {
+      background: #fff;
+      width: 100%;
+      max-width: 700px;
+      border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+
+    .accordion h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid #ddd;
+    }
+
+    .accordion-header {
+      padding: 15px;
+      cursor: pointer;
+      background-color: #f7f7f7;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s ease;
+    }
+
+    .accordion-header:hover {
+      background-color: #e9e9e9;
+    }
+
+    .accordion-header span {
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      padding: 0 15px;
+      color: #444;
+      background: #fff;
+    }
+
+    .accordion-content.open {
+      padding: 15px;
+    }
+
+    .accordion-header.active span {
+      transform: rotate(45deg);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="accordion">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        What is your return policy?
+        <span>+</span>
+      </div>
+      <div class="accordion-content">
+        <p>You can return any item within 30 days of purchase for a full refund.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        How do I track my order?
+        <span>+</span>
+      </div>
+      <div class="accordion-content">
+        <p>After placing an order, you'll receive an email with a tracking link.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">
+        Do you offer customer support?
+        <span>+</span>
+      </div>
+      <div class="accordion-content">
+        <p>Yes, our support team is available 24/7 via email and live chat.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const headers = document.querySelectorAll('.accordion-header');
+
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        const content = header.nextElementSibling;
+        const icon = header.querySelector('span');
+
+        const isOpen = content.classList.contains('open');
+
+        // Close all open items
+        document.querySelectorAll('.accordion-content').forEach(c => {
+          c.style.maxHeight = null;
+          c.classList.remove('open');
+        });
+        document.querySelectorAll('.accordion-header').forEach(h => {
+          h.classList.remove('active');
+        });
+
+        // Open this one if not already open
+        if (!isOpen) {
+          content.classList.add('open');
+          header.classList.add('active');
+          content.style.maxHeight = content.scrollHeight + 'px';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

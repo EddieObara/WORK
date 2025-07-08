@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pricing Plan Toggle</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .toggle-container {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .toggle-container input[type="checkbox"] {
+      display: none;
+    }
+
+    .toggle-label {
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .toggle-label span {
+      margin: 0 10px;
+    }
+
+    .switch {
+      width: 50px;
+      height: 25px;
+      background-color: #ccc;
+      border-radius: 50px;
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    .switch::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      border-radius: 50%;
+      top: 2.5px;
+      left: 3px;
+      transition: transform 0.3s ease;
+    }
+
+    #toggle:checked + .toggle-label .switch {
+      background-color: #007BFF;
+    }
+
+    #toggle:checked + .toggle-label .switch::before {
+      transform: translateX(25px);
+    }
+
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .card {
+      background: white;
+      padding: 30px 20px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .price {
+      font-size: 32px;
+      margin: 20px 0;
+      font-weight: bold;
+      color: #007BFF;
+    }
+
+    .features {
+      margin-bottom: 20px;
+    }
+
+    .features li {
+      list-style: none;
+      margin-bottom: 10px;
+    }
+
+    .card button {
+      padding: 10px 20px;
+      border: none;
+      background: #007BFF;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .card button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Our Pricing Plans</h1>
+
+  <div class="toggle-container">
+    <input type="checkbox" id="toggle">
+    <label class="toggle-label" for="toggle">
+      <span>Monthly</span>
+      <div class="switch"></div>
+      <span>Yearly</span>
+    </label>
+  </div>
+
+  <div class="pricing-cards">
+    <div class="card">
+      <h3>Basic</h3>
+      <div class="price" data-month="9" data-year="90">$9/mo</div>
+      <ul class="features">
+        <li>1 User</li>
+        <li>5 Projects</li>
+        <li>Email Support</li>
+      </ul>
+      <button>Select</button>
+    </div>
+    <div class="card">
+      <h3>Pro</h3>
+      <div class="price" data-month="19" data-year="190">$19/mo</div>
+      <ul class="features">
+        <li>5 Users</li>
+        <li>Unlimited Projects</li>
+        <li>Priority Support</li>
+      </ul>
+      <button>Select</button>
+    </div>
+    <div class="card">
+      <h3>Ultimate</h3>
+      <div class="price" data-month="29" data-year="290">$29/mo</div>
+      <ul class="features">
+        <li>Unlimited Users</li>
+        <li>Unlimited Projects</li>
+        <li>Dedicated Support</li>
+      </ul>
+      <button>Select</button>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('toggle');
+    const prices = document.querySelectorAll('.price');
+
+    toggle.addEventListener('change', () => {
+      prices.forEach(price => {
+        const monthly = price.getAttribute('data-month');
+        const yearly = price.getAttribute('data-year');
+        if (toggle.checked) {
+          price.textContent = `$${yearly}/yr`;
+        } else {
+          price.textContent = `$${monthly}/mo`;
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
