@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Manager with Due Dates</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, rgb(192, 50, 50), rgb(28, 4, 134));
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      margin-top: 50px;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    input[type="text"], input[type="date"] {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .task {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      margin: 10px 0;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .task.completed span {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .task .due-date {
+      font-size: 0.85em;
+      color: #666;
+    }
+
+    .filters button.active {
+      background: #007bff;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Task Manager</h1>
+    <div class="input-group">
+      <input type="text" id="taskInput" placeholder="Enter a task...">
+      <input type="date" id="dueDate">
+      <button onclick="addTask()">Add</button>
+    </div>
+    <div class="filters" style="margin-top: 10px;">
+      <button onclick="filterTasks('all')" class="active">All</button>
+      <button onclick="filterTasks('completed')">Completed</button>
+      <button onclick="filterTasks('pending')">Pending</button>
+    </div>
+    <div id="taskList"></div>
+  </div>
+
+  <script>
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    let currentFilter = 'all';
+
+    function saveTasks() {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function renderTasks() {
+      const taskList = document.getElementById("taskList");
+      taskList.innerHTML = "";
+      let filtered = tasks;
+      if (currentFilter === 'completed') {
+        filtered = tasks.filter(t => t.completed);
+      } else if (currentFilter === 'pending') {
+        filtered = tasks.filter(t => !t.completed);
+      }
+
+      filtered.forEach((task, index) => {
+        const taskDiv = document.createElement("div");
+        taskDiv.className = `task ${task.completed ? 'completed' : ''}`;
+        taskDiv.innerHTML = `
+          <div>
+            <span>${task.name}</span><br>
+            <span class="due-date">Due: ${task.dueDate || 'None'}</span>
+          </div>
+          <div>
+            <button onclick="toggleComplete(${index})">✓</button>
+            <button onclick="editTask(${index})">✎</button>
+            <button onclick="deleteTask(${index})">🗑️</button>
+          </div>
+        `;
+        taskList.appendChild(taskDiv);
+      });
+    }
+
+    function addTask() {
+      const input = document.getElementById("taskInput");
+      const dueInput = document.getElementById("dueDate");
+      const name = input.value.trim();
+      const dueDate = dueInput.value;
+      if (name) {
+        tasks.push({ name, completed: false, dueDate });
+        saveTasks();
+        renderTasks();
+        input.value = "";
+        dueInput.value = "";
+      }
+    }
+
+    function toggleComplete(index) {
+      tasks[index].completed = !tasks[index].completed;
+      saveTasks();
+      renderTasks();
+    }
+
+    function deleteTask(index) {
+      tasks.splice(index, 1);
+      saveTasks();
+      renderTasks();
+    }
+
+    function editTask(index) {
+      const newName = prompt("Edit task:", tasks[index].name);
+      if (newName !== null) {
+        tasks[index].name = newName.trim();
+        saveTasks();
+        renderTasks();
+      }
+    }
+
+    function filterTasks(filter) {
+      currentFilter = filter;
+      document.querySelectorAll(".filters button").forEach(btn => btn.classList.remove("active"));
+      document.querySelector(`.filters button[onclick*='${filter}']`).classList.add("active");
+      renderTasks();
+    }
+
+    renderTasks();
+  </script>
+</body>
+</html>

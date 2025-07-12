@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #74ebd5, #acb6e5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .weather-card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 300px;
+    }
+
+    .weather-card h2 {
+      margin: 0;
+      color: #333;
+    }
+
+    .weather-icon {
+      font-size: 50px;
+      margin: 20px 0;
+    }
+
+    .temp {
+      font-size: 48px;
+      font-weight: bold;
+      color: #007BFF;
+    }
+
+    .details {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #555;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="weather-card">
+    <h2>Nairobi</h2>
+    <div class="weather-icon">☀️</div>
+    <div class="temp">28°C</div>
+    <div class="details">
+      <div>Condition: Sunny</div>
+      <div>Humidity: 45%</div>
+      <div>Wind: 12 km/h</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Countdown Timer</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      font-family: Arial, sans-serif;
+      color: white;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 500px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .time-box {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px 10px;
+    }
+
+    .time-box h2 {
+      font-size: 2em;
+      margin: 0;
+    }
+
+    .time-box span {
+      font-size: 0.9em;
+      display: block;
+      margin-top: 8px;
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #f1c40f;
+      display: none;
+    }
+
+    @media (max-width: 500px) {
+      .countdown {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Countdown to Launch</h1>
+    <div class="countdown" id="countdown">
+      <div class="time-box">
+        <h2 id="days">00</h2>
+        <span>Days</span>
+      </div>
+      <div class="time-box">
+        <h2 id="hours">00</h2>
+        <span>Hours</span>
+      </div>
+      <div class="time-box">
+        <h2 id="minutes">00</h2>
+        <span>Minutes</span>
+      </div>
+      <div class="time-box">
+        <h2 id="seconds">00</h2>
+        <span>Seconds</span>
+      </div>
+    </div>
+    <div class="message" id="message">🎉 The countdown is over!</div>
+  </div>
+
+  <script>
+    const countdown = document.getElementById('countdown');
+    const message = document.getElementById('message');
+
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+
+    // Set target date (change this to any future date)
+    const targetDate = new Date("December 31, 2025 23:59:59").getTime();
+
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        clearInterval(interval);
+        countdown.style.display = "none";
+        message.style.display = "block";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      daysEl.textContent = String(days).padStart(2, '0');
+      hoursEl.textContent = String(hours).padStart(2, '0');
+      minutesEl.textContent = String(minutes).padStart(2, '0');
+      secondsEl.textContent = String(seconds).padStart(2, '0');
+    }, 1000);
+  </script>
+
+</body>
+</html>

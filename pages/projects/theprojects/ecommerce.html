@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Page with Cart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+       background: linear-gradient(to right, #c9b7c4, #eed38a);
+    }
+
+    .product {
+      display: flex;
+      flex-direction: column;
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .gallery img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .details {
+      margin-top: 20px;
+    }
+
+    .details h2 {
+      margin: 0;
+    }
+
+    .quantity {
+      margin: 15px 0;
+    }
+
+    .cart {
+      margin-top: 40px;
+      max-width: 600px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    button {
+      padding: 10px 15px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .product, .cart {
+        margin: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="product">
+    <div class="gallery">
+      <img src="https://via.placeholder.com/600x400" alt="Product Image" id="mainImage">
+    </div>
+    <div class="details">
+      <h2>Product Name</h2>
+      <p>Price: <strong>KES <span id="price">1500</span></strong></p>
+      <div class="quantity">
+        Quantity: <input type="number" id="qty" min="1" value="1" />
+      </div>
+      <button onclick="addToCart()">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="cart">
+    <h3>Cart</h3>
+    <div id="cartItems"></div>
+    <h4>Total: KES <span id="cartTotal">0</span></h4>
+  </div>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function updateCartDisplay() {
+      const cartContainer = document.getElementById('cartItems');
+      const cartTotalEl = document.getElementById('cartTotal');
+      cartContainer.innerHTML = '';
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price * item.qty;
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          ${item.name} x${item.qty} - KES ${(item.price * item.qty).toFixed(2)}
+          <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartContainer.appendChild(div);
+      });
+      cartTotalEl.textContent = total.toFixed(2);
+    }
+
+    function addToCart() {
+      const name = "Product Name";
+      const price = parseFloat(document.getElementById('price').textContent);
+      const qty = parseInt(document.getElementById('qty').value);
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.qty += qty;
+      } else {
+        cart.push({ name, price, qty });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartDisplay();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartDisplay();
+    }
+
+    updateCartDisplay();
+  </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"No tests yet\""
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,15 @@
     "url": "https://github.com/EddieObara/PORTFOLIO/issues"
   },
   "homepage": "https://github.com/EddieObara/PORTFOLIO#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.2",
+    "socket": "^1.0.33",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
 }

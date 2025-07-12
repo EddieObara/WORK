@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Currency Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #1e3c72, #472a98);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .converter {
+      background-color: #b4b2b2;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    select,
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      text-align: center;
+      font-weight: bold;
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <div class="converter">
+    <h2>Currency Converter</h2>
+    <div class="form-group">
+      <label for="amount">Amount</label>
+      <input type="number" id="amount" placeholder="Enter amount" />
+    </div>
+    <div class="form-group">
+      <label for="from">From</label>
+      <select id="from">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="KES">KES</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="to">To</label>
+      <select id="to">
+        <option value="KES">KES</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+      </select>
+    </div>
+    <div class="result" id="result">Converted Amount: </div>
+  </div>
+
+  <script>
+    const amountInput = document.getElementById("amount");
+    const fromSelect = document.getElementById("from");
+    const toSelect = document.getElementById("to");
+    const result = document.getElementById("result");
+
+    const exchangeRates = {
+      USD: { KES: 140.5, EUR: 0.93 },
+      KES: { USD: 0.0071, EUR: 0.0066 },
+      EUR: { USD: 1.08, KES: 151.2 }
+    };
+
+    function convert() {
+      const amount = parseFloat(amountInput.value);
+      const from = fromSelect.value;
+      const to = toSelect.value;
+
+      if (!isNaN(amount)) {
+        if (from === to) {
+          result.textContent = `Converted Amount: ${amount.toFixed(2)} ${to}`;
+          return;
+        }
+
+        const rate = exchangeRates[from]?.[to];
+        if (rate) {
+          const converted = amount * rate;
+          result.textContent = `Converted Amount: ${converted.toFixed(2)} ${to}`;
+        } else {
+          result.textContent = "Conversion rate not available.";
+        }
+      } else {
+        result.textContent = "Converted Amount: ";
+      }
+    }
+
+    amountInput.addEventListener("input", convert);
+    fromSelect.addEventListener("change", convert);
+    toSelect.addEventListener("change", convert);
+  </script>
+</body>
+</html>
