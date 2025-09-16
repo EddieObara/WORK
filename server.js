@@ -36,6 +36,16 @@ app.get('/chat', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'projects', 'theprojects', 'chatapp', 'chatapp.html'));
 });
 
+// serve cybersecurity.html from pages folder
+app.get('/page', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages', 'cstaff.html'));
+});
+
+
+app.get('/chat', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages', 'projects', 'theprojects', 'chatapp', 'chatapp.html'));
+});
+
 const users = {};
 const userColors = {};
 const COLORS = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe'];
