@@ -1,3 +1,4 @@
+// File: server.js
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -36,8 +37,6 @@ app.get('/chat', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'projects', 'theprojects', 'chat', 'chatapp.html'));
 });
 
-// serve cybersecurity.html from pages folder
-
 const users = {};
 const userColors = {};
 const COLORS = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe'];
@@ -64,6 +63,7 @@ io.on('connection', async (socket) => {
     const newMsg = new Message({ name, message, socketId: socket.id });
     await newMsg.save();
 
+    // ✅ Keep io.emit so sender also receives the message once
     io.emit('chat-message', { name, message, color, id: newMsg._id });
   });
 
@@ -76,9 +76,11 @@ io.on('connection', async (socket) => {
   });
 
   socket.on('disconnect', () => {
-    socket.broadcast.emit('user-disconnected', users[socket.id]);
-    delete users[socket.id];
-    delete userColors[socket.id];
+    if (users[socket.id]) {  // ✅ Guard against undefined user
+      socket.broadcast.emit('user-disconnected', users[socket.id]);
+      delete users[socket.id];
+      delete userColors[socket.id];
+    }
   });
 });
 

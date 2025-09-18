@@ -25,7 +25,8 @@ messageForm.addEventListener('submit', e => {
   const message = messageInput.value.trim();
   if (message === '') return;
 
-  appendMessage(`You: ${message}`);
+  // ✅ Removed the immediate "You: ..." append.
+  //    The server will broadcast the message back and we'll display it then.
   socket.emit('send-chat-message', message);
   messageInput.value = '';
 });
@@ -34,11 +35,13 @@ socket.on('chat-message', data => {
   appendMessage(`${data.name}: ${data.message}`);
 });
 
-socket.on('user-connected', name => {
-  appendMessage(`${name} joined the chat`);
+socket.on('user-connected', data => {
+  // ✅ Access the name property of the object sent by the server
+  appendMessage(`${data.name} joined the chat`);
 });
 
 socket.on('user-disconnected', name => {
+  // Server already sends just the name here
   appendMessage(`${name} left the chat`);
 });
 
