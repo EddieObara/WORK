@@ -33,18 +33,10 @@ app.get('/', (req, res) => {
 
 // Serve chatapp.html at route "/chat"
 app.get('/chat', (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages', 'projects', 'theprojects', 'chatapp', 'chatapp.html'));
+  res.sendFile(path.join(__dirname, 'pages', 'projects', 'theprojects', 'chat', 'chatapp.html'));
 });
 
 // serve cybersecurity.html from pages folder
-app.get('/page', (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages', 'cstaff.html'));
-});
-
-
-app.get('/chat', (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages', 'projects', 'theprojects', 'chatapp', 'chatapp.html'));
-});
 
 const users = {};
 const userColors = {};
