@@ -1,234 +1,272 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Eddie's Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Eddy — Creator Websites & Branding</title>
+  <meta name="description" content="Bespoke websites for models, creators and influencers — designed to convert followers into clients." />
+  <!-- Google Font (optional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Inline / internal CSS (kept in-file per request) -->
   <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #1e3c72, #472a98);
-      color: white;
+    /* Reset + base */
+    :root{
+      --bg:#0b0711;
+      --glass-bg: rgba(255,255,255,0.06);
+      --muted: rgba(255,255,255,0.7);
+      --accent1: #ff7eb3; /* pink */
+      --accent2: #7afcff; /* cyan */
+      --accent3: #7bff7a; /* green */
+      --card: rgba(255,255,255,0.04);
+      --glass-border: rgba(255,255,255,0.08);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#0f0b14);color:#fff}
+    a{color:inherit;text-decoration:none}
 
-    /* === Background Text Effect === */
-    #backgroundText {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    .fallingText {
-  position: absolute;
-  font-size: 24px;
-  font-weight: 300;
-  background: linear-gradient(90deg, #3679f5 50%, #0082C9 25%, #00ADEF 65%, white 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-family: Arial, sans-serif;
-  user-select: none;
-  white-space: nowrap;
-  transform: rotate(0deg);
+    /* page layout */
+    .wrap{
+  max-width:1500px;       /* wider layout for a modern spacious feel */
+  margin:40px auto;       /* more vertical breathing room */
+  padding:30px 50px;      /* generous horizontal spacing */
 }
 
 
-    /* === Main Content === */
+    /* header */
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:14px;display:grid;place-items:center;font-weight:800;background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#0b0711;box-shadow:0 6px 30px rgba(0,0,0,0.6)}
+    .brand h1{font-size:18px;margin:0}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
+    nav a{font-weight:600;padding:8px 12px;border-radius:10px;color:var(--muted)}
+    nav a.cta{background:linear-gradient(90deg,var(--accent2),var(--accent1));color:#07060a;padding:10px 14px}
 
-  .wrapper {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-    header {
-      text-align: center;
-      padding: 4rem 1rem;
-      animation: fadeInDown 1s ease-in-out;
-    }
-
-   header img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 4px solid white;
-  margin-bottom: 1rem;
-  object-fit: cover;
+    /* hero */
+.hero{
+  display:grid;
+  grid-template-columns:1fr 480px; /* make the right image column a bit larger */
+  gap:40px;                        /* more space between text and image */
+  align-items:center;
+  margin-bottom:50px;
 }
+    .hero-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:20px;padding:34px;backdrop-filter: blur(8px);box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+    .eyebrow{display:inline-block;padding:6px 10px;border-radius:999px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#07060a;font-weight:700;font-size:12px}
+    .hero h2{font-size:34px;line-height:1.02;margin:12px 0 8px}
+    .hero p{color:var(--muted);margin:0 0 18px}
 
+    /* hero art */
+    .art{position:relative;height:320px;border-radius:18px;overflow:hidden}
+    .blob{position:absolute;inset:0;background:linear-gradient(135deg,var(--accent1),var(--accent2));filter:blur(42px);transform:scale(1.1) translateY(-18px);opacity:0.9}
+    .portrait{position:absolute;right:18px;bottom:18px;width:58%;height:78%;background:url('https://images.unsplash.com/photo-1613140696001-ef5be268b848?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.6);border:4px solid rgba(255,255,255,0.06)}
 
-    h1 {
-      margin: 0.2rem 0;
-      font-size: 2.5rem;
-    }
+    /* features */
+    .features{display:flex;gap:12px;margin-top:14px}
+    .feature{flex:1;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:12px;border-radius:12px;border:1px solid var(--glass-border);text-align:center}
+    .feature h4{margin:6px 0 0;font-size:14px}
+    .feature p{color:var(--muted);font-size:13px;margin:6px 0 0}
 
-    p {
-      font-size: 1.1rem;
-      opacity: 0.9;
-    }
+    /* portfolio grid */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:26px 0}
+    .card{background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);transition:transform .28s ease, box-shadow .28s ease}
+    .card:hover{transform:translateY(-8px);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+    .card img{width:100%;height:200px;object-fit:cover;border-radius:8px}
+    .card h3{margin:12px 0 6px}
+    .card p{color:var(--muted);font-size:13px}
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      padding: 2rem;
-      gap: 2rem;
-    }
+    /* services + pricing */
+    .two-col{display:grid;grid-template-columns:1fr 350px;gap:18px}
+    .pricing{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:12px;border:1px solid var(--glass-border)}
+    .price{font-size:22px;font-weight:800}
 
-    .projects, .cybersecurity {
-      flex: 1 1 300px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 2rem;
-      animation: fadeIn 1.2s ease-in-out;
-    }
+    /* contact */
+    form{display:grid;gap:10px}
+    input,select,textarea{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff;outline:none}
+    button.primary{padding:14px;border-radius:12px;border:none;font-weight:700;background:linear-gradient(90deg,var(--accent2),var(--accent1));color:#07060a;cursor:pointer}
 
-    .section-title {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
+    /* footer */
+    footer{margin-top:48px;text-align:center;color:var(--muted);font-size:13px;opacity:0.9}
 
-    .message-me {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 2rem;
-      margin: 2rem;
-      text-align: center;
-      border-radius: 12px;
-    }
+    /* responsive */
+    @media (max-width:980px){.hero{grid-template-columns:1fr;}.grid{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}}
+    @media (max-width:640px){.grid{grid-template-columns:1fr}.portrait{display:none}.wrap{padding:18px}}
 
-    input, textarea {
-      width: 90%;
-      max-width: 400px;
-      margin: 0.5rem 0;
-      padding: 0.75rem;
-      border: none;
-      border-radius: 8px;
-      font-family: inherit;
-    }
-
-    button {
-      padding: 0.75rem 1.5rem;
-      background: white;
-      color: #472a98;
-      font-weight: 600;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background: #ddd;
-    }
-
-    a.button {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.75rem 1.5rem;
-      background: white;
-      color: #472a98;
-      text-decoration: none;
-      font-weight: 600;
-      border-radius: 30px;
-      transition: background 0.3s;
-    }
-
-    a.button:hover {
-      background: #ddd;
-    }
-
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+    /* subtle entrance animations */
+    .fade-up{opacity:0;transform:translateY(8px);animation:fadeUp .8s forwards}
+    @keyframes fadeUp{to{opacity:1;transform:none}}
   </style>
 </head>
 <body>
-  <div class="wrapper">
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">E</div>
+        <div>
+          <h1>Eddie — Creator Websites</h1>
+          <p>Beautiful, artistic sites for models & creators</p>
+        </div>
+      </div>
+      <nav>
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#contact" class="cta">Get a Preview</a>
+      </nav>
+    </header>
 
-    <!-- Background Floating Words -->
-  <div id="backgroundText">
-    <div class="fallingText">JAVASCRIPT</div>
-    <div class="fallingText">Nodejs</div>
-    <div class="fallingText">MongoDB</div>
-    <div class="fallingText">Code</div>
-    <div class="fallingText">Powershell</div>
-    <div class="fallingText">Charge.io</div>
-    <div class="fallingText">Focus</div>
-  </div>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-card fade-up" style="min-height:320px">
+        <span class="eyebrow">Brand · Sites · Bookings</span>
+        <h2>Websites that turn followers into opportunities</h2>
+        <p>Create a personal hub for collaborations, bookings, and sales — designed with an artist's eye.</p>
 
-  <!-- Main Portfolio Content -->
+        <div class="features">
+          <div class="feature">
+            <strong>Fast Setup</strong>
+            <h4>1–3 day MVP</h4>
+            <p>Get a stunning landing page quickly.</p>
+          </div>
+          <div class="feature">
+            <strong>Booking Ready</strong>
+            <h4>Calendars & Forms</h4>
+            <p>Built-in booking/contact integrations.</p>
+          </div>
+          <div class="feature">
+            <strong>Secure</strong>
+            <h4>Payments & Hosting</h4>
+            <p>You own the site & data.</p>
+          </div>
+        </div>
 
-  <header>
-    <img src="images/person_1.jpg" alt="Profile Picture">
-    <h1>Hello, I'm Eddie</h1>
-    <p>Your friendly Full Stack Developer and Cybersecurity Enthusiast. <div>Building modern solutions with MongoDB,</div> Express, Node.js, JavaScript, and Flutter.</p>
-  </header>
+        <div style="margin-top:18px;display:flex;gap:10px;align-items:center">
+          <a href="#contact" class="primary" style="padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#07060a;font-weight:800">Request a Preview</a>
+          <a href="#work" style="color:var(--muted);font-weight:700;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.04)">See Examples</a>
+        </div>
+      </div>
 
-  <div class="container">
-    <section class="projects">
-      <div class="section-title">Projects</div>
-      <p>Just some projects I threw together so this site doesn't look like an empty fridge.</p>
-      <a href="pages/projects/projects.html" class="button">View Projects</a>
+      <div class="art fade-up" style="height:320px">
+        <div class="blob"></div>
+        <div class="portrait"></div>
+      </div>
     </section>
 
-    <section class="cybersecurity">
-      <div class="section-title">Cybersecurity Lab</div>
-      <p>COMING SOON: A deep dive into my cybersecurity experiments, tools, and demos.</p>
-      <a href="pages/cstaff.html" class="button">Cyber Stuff</a>
+    <!-- PORTFOLIO -->
+    <section id="work">
+      <h2 style="margin:0 0 12px">Selected Work</h2>
+      <div class="grid">
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop&s=placeholder" alt="example">
+          <h3>Minimal Portfolio</h3>
+          <p>Clean, lightweight portfolio that highlights imagery and brand deals.</p>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=1200&auto=format&fit=crop&s=placeholder" alt="example">
+          <h3>Booking & Links</h3>
+          <p>Landing page with contact, booking CTA and link hub.</p>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1531123414780-fc35f3a2a2d6?q=80&w=1200&auto=format&fit=crop&s=placeholder" alt="example">
+          <h3>Shop + Content</h3>
+          <p>E-commerce ready site for merch and digital content.</p>
+        </div>
+      </div>
     </section>
+
+    <!-- SERVICES + PRICING -->
+    <section id="services" class="two-col">
+      <div>
+        <h2 style="margin-top:0">What I build</h2>
+        <p style="color:var(--muted)">From single-page portfolios to full brand sites with booking, commerce and analytics. I focus on aesthetic-first design that converts.</p>
+
+        <ul style="color:var(--muted);line-height:1.8">
+          <li>Custom landing pages & portfolios</li>
+          <li>Booking forms & calendar integration</li>
+          <li>Photo galleries with gated/private access</li>
+          <li>Shop integration + payment setup</li>
+          <li>SEO & analytics for discoverability</li>
+        </ul>
+
+        <div style="display:flex;gap:12px;margin-top:14px">
+          <div class="pricing">
+            <div class="price">Starter — $250</div>
+            <div style="color:var(--muted);margin-top:6px">One-page portfolio & link hub</div>
+          </div>
+          <div class="pricing">
+            <div class="price">Pro — $600</div>
+            <div style="color:var(--muted);margin-top:6px">Full site with booking & contact</div>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="pricing" style="text-align:center">
+          <div style="font-size:13px;color:var(--muted)">Popular</div>
+          <div style="font-weight:800;font-size:28px;margin-top:6px">Creator Pro</div>
+          <div style="color:var(--muted);margin:8px 0">$600 — includes hosting setup (first month)</div>
+          <a href="#contact" class="primary" style="display:inline-block;width:100%;text-align:center">Get Started</a>
+        </div>
+      </aside>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" style="margin-top:28px">
+      <h2>Request your preview</h2>
+      <p style="color:var(--muted)">Send a quick brief and I’ll design a homepage preview (no charge).</p>
+
+      <div style="margin-top:14px;display:grid;grid-template-columns:1fr 360px;gap:18px">
+        <form action="contact.php" method="POST" style="background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:12px;border:1px solid var(--glass-border)">
+          <input type="text" name="name" placeholder="Your name" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <input type="text" name="instagram" placeholder="Instagram handle (e.g. @yourname)">
+          <select name="package">
+            <option value="starter">Starter — $250</option>
+            <option value="pro">Pro — $600</option>
+            <option value="premium">Premium — Custom</option>
+          </select>
+          <textarea name="message" placeholder="Short brief (colors, vibe, must-haves)" style="height:110px"></textarea>
+
+          <!-- reCAPTCHA: add your site key here if you want the widget visible -->
+          <!-- <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY_HERE"></div> -->
+
+          <button class="primary" type="submit" style="margin-top:8px">Send Preview Request</button>
+        </form>
+
+        <div style="padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid var(--glass-border)">
+          <h3 style="margin-top:0">Why a preview?</h3>
+          <p style="color:var(--muted)">Preview pages win deals. It shows the influencer exactly how their brand will look — no commitments.</p>
+
+          <h4 style="margin-bottom:6px">What's included</h4>
+          <ul style="color:var(--muted);line-height:1.6">
+            <li>Homepage mockup tailored to your feed</li>
+            <li>Color + font suggestions</li>
+            <li>CTA / booking example</li>
+          </ul>
+
+          <div style="margin-top:12px">
+            <strong>Payment</strong>
+            <p style="color:var(--muted);margin:6px 0">We accept PayPal, Stripe & bank transfers. You own the site.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Built by Eddie ·  — © " + new Date().getFullYear() + "</p>
+    </footer>
   </div>
 
-  <section class="message-me">
-    <h2>Message Me</h2>
-    <form>
-      <input type="text" placeholder="Your Name" required><br>
-      <input type="email" placeholder="Your Email" required><br>
-      <textarea rows="4" placeholder="Your Message" required></textarea><br>
-      <button type="submit">Send Message</button>
-    </form>
-  </section>
-  </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const texts = document.querySelectorAll(".fallingText");
+  <!-- reCAPTCHA script if you enable the widget -->
+  <!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
 
-      texts.forEach((text) => {
-        let x = Math.random() * (window.innerWidth - 100);
-        let y = window.innerHeight;
-        let speed = 0.2 + Math.random() * 0.3;
-
-        const tilt = Math.floor(Math.random() * 50) - 25;
-        text.style.transform = `rotate(${tilt}deg)`;
-        text.style.left = `${x}px`;
-
-        function animate() {
-          const textHeight = text.offsetHeight;
-          y -= speed;
-
-          if (y < -textHeight) {
-            y = window.innerHeight;
-            x = Math.random() * (window.innerWidth - 100);
-            text.style.left = `${x}px`;
-          }
-
-          text.style.top = `${y}px`;
-          requestAnimationFrame(animate);
-        }
-
-        animate();
-      });
-    });
+  <!-- Small JS for graceful touches -->
+  <script>
+    // tiny enhancement: set current year in footer (kept minimal)
+    (function(){
+      try{document.querySelector('footer p').innerText = 'Built by Eddie  — © ' + new Date().getFullYear();}catch(e){}
+      // simple fade-in
+      document.querySelectorAll('.fade-up').forEach((el,i)=>{el.style.animationDelay=(i*120)+'ms'});
+    })();
   </script>
 </body>
 </html>
