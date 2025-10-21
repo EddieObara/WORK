@@ -196,12 +196,41 @@
 
     <footer><p>Built by Eddie — © <span id="year"></span></p></footer>
   </div>
-
+<div id="popup" style="
+  display:none;
+  position:fixed;
+  top:25px;
+  right:25px;
+  background:#333;
+  color:#fff;
+  padding:14px 20px;
+  border-radius:10px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow:0 4px 12px rgba(0,0,0,0.3);
+  z-index:9999;
+  opacity:0;
+  transform:translateY(-15px);
+  transition:opacity 0.4s ease, transform 0.4s ease;
+"></div>
   <script>
     document.getElementById('year').textContent=new Date().getFullYear();
   </script>
 
   <script>
+  // Popup function
+  function showPopup(message, isSuccess = true) {
+    const popup = document.getElementById('popup');
+    popup.style.background = isSuccess ? '#28a745' : '#dc3545'; // green or red
+    popup.textContent = message;
+    popup.style.display = 'block';
+    popup.style.opacity = '1';
+    setTimeout(() => {
+      popup.style.opacity = '0';
+      setTimeout(() => popup.style.display = 'none', 400); // fade out
+    }, 4000);
+  }
+
+  // Handle form submission
   document.getElementById('contactForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -227,29 +256,14 @@
       const result = await response.json();
 
       if (result.success) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Your request was sent successfully.',
-          confirmButtonColor: '#3085d6',
-        });
+        showPopup('Your request was sent successfully.', true);
         e.target.reset();
       } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: "Your request wasn't successful, try again.",
-          confirmButtonColor: '#d33',
-        });
+        showPopup("Your request wasn't successful, try again.", false);
       }
     } catch (error) {
       console.error('Error:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: "Your request wasn't successful, try again.",
-        confirmButtonColor: '#d33',
-      });
+      showPopup("Your request wasn't successful, try again.", false);
     } finally {
       button.disabled = false;
       button.textContent = 'Send Preview Request';
