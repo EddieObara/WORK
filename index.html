@@ -201,7 +201,7 @@
     document.getElementById('year').textContent=new Date().getFullYear();
   </script>
 
-    <script>
+  <script>
   document.getElementById('contactForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -227,20 +227,37 @@
       const result = await response.json();
 
       if (result.success) {
-        alert('✅ Preview request sent successfully!');
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Your request was sent successfully.',
+          confirmButtonColor: '#3085d6',
+        });
         e.target.reset();
       } else {
-        alert('❌ Failed to send request. Please try again.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: "Your request wasn't successful, try again.",
+          confirmButtonColor: '#d33',
+        });
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('⚠️ Something went wrong. Please try again.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: "Your request wasn't successful, try again.",
+        confirmButtonColor: '#d33',
+      });
     } finally {
       button.disabled = false;
       button.textContent = 'Send Preview Request';
     }
   });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   </script>
 </body>
