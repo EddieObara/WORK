@@ -1,11 +1,14 @@
 // File: server.js
+require('dotenv').config();
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const path = require('path');
 const mongoose = require('mongoose');
+const nodemailer = require('nodemailer');
 
 const app = express();
+app.use(express.json());
 const server = http.createServer(app);
 const io = new Server(server);
 
@@ -85,6 +88,44 @@ io.on('connection', async (socket) => {
 });
 
 const PORT = process.env.PORT || 3000;
+
+// 📧 Route to send emails
+app.post('/send-email', async (req, res) => {
+  const { name, email, instagram, package: selectedPackage, brief } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'info@eddiebello.dev', // your Workspace email
+     pass: process.env.PASS
+    }
+  });
+
+  const mailOptions = {
+    from: `"${name}" <${email}>`,
+    to: 'info@eddiebello.dev',
+    subject: `New Preview Request from ${name}`,
+    text: `
+Name: ${name}
+Email: ${email}
+Instagram: ${instagram}
+Package: ${selectedPackage}
+
+Brief:
+${brief}
+`
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false });
+  }
+});
+
+
 server.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
 });
