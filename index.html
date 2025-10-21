@@ -233,7 +233,7 @@
     document.getElementById('year').textContent=new Date().getFullYear();
   </script>
 
-  <script>
+<script>
   // Popup function
   function showPopup(message, isSuccess = true) {
     const popup = document.getElementById('popup');
@@ -244,13 +244,14 @@
     popup.style.display = 'block';
     popup.style.opacity = '1';
 
-    // Fade out after 4s (only for desktop view)
-    if (window.innerWidth > 768) {
-      setTimeout(() => {
-        popup.style.opacity = '0';
-        setTimeout(() => popup.style.display = 'none', 400);
-      }, 4000);
-    }
+    // Fade-out timing based on screen size
+    const fadeDelay = window.innerWidth <= 768 ? 6000 : 4000; // 6s on mobile/tablet, 4s on desktop
+
+    // Fade out after the delay
+    setTimeout(() => {
+      popup.style.opacity = '0';
+      setTimeout(() => popup.style.display = 'none', 400);
+    }, fadeDelay);
   }
 
   // Handle form submission
@@ -293,6 +294,7 @@
     }
   });
 </script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
