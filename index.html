@@ -92,6 +92,37 @@
 
     @keyframes fadeUp{to{opacity:1;transform:none}}
     .fade-up{opacity:0;transform:translateY(8px);animation:fadeUp .8s forwards}
+
+   #popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #28a745;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  display: none;
+  opacity: 0;
+  z-index: 1000;
+  transition: opacity 0.4s ease-in-out;
+}
+
+/* On tablets and small devices, move below the button */
+@media (max-width: 768px) {
+  #popup {
+    position: static;
+    display: none;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+    box-shadow: none;
+  }
+}
+
+
   </style>
 </head>
 
@@ -185,6 +216,7 @@
   </select>
   <textarea id="brief" placeholder="Short brief (colors, vibe, must-haves)" style="height:110px"></textarea>
   <button class="primary" type="submit">Send Preview Request</button>
+  <div id="popup"></div>
 </form>
 
         <div class="pricing">
@@ -196,22 +228,7 @@
 
     <footer><p>Built by Eddie — © <span id="year"></span></p></footer>
   </div>
-<div id="popup" style="
-  display:none;
-  position:fixed;
-  top:25px;
-  right:25px;
-  background:#333;
-  color:#fff;
-  padding:14px 20px;
-  border-radius:10px;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  box-shadow:0 4px 12px rgba(0,0,0,0.3);
-  z-index:9999;
-  opacity:0;
-  transform:translateY(-15px);
-  transition:opacity 0.4s ease, transform 0.4s ease;
-"></div>
+
   <script>
     document.getElementById('year').textContent=new Date().getFullYear();
   </script>
@@ -222,12 +239,18 @@
     const popup = document.getElementById('popup');
     popup.style.background = isSuccess ? '#28a745' : '#dc3545'; // green or red
     popup.textContent = message;
+
+    // Show the popup
     popup.style.display = 'block';
     popup.style.opacity = '1';
-    setTimeout(() => {
-      popup.style.opacity = '0';
-      setTimeout(() => popup.style.display = 'none', 400); // fade out
-    }, 4000);
+
+    // Fade out after 4s (only for desktop view)
+    if (window.innerWidth > 768) {
+      setTimeout(() => {
+        popup.style.opacity = '0';
+        setTimeout(() => popup.style.display = 'none', 400);
+      }, 4000);
+    }
   }
 
   // Handle form submission
@@ -273,6 +296,5 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  </script>
 </body>
 </html>
