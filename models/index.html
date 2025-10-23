@@ -5,229 +5,516 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Model Demo — Interactive Single Page</title>
   <style>
-    :root{
-      --accent:#ff6b6b;
-      --bg:#0f1724;
-      --card:#0b1117;
-      --muted:#9aa4b2;
-      --glass: rgba(255,255,255,0.03);
-      --glass-2: rgba(255,255,255,0.02);
-      --radius:14px;
-      color-scheme: dark;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,#071026 0%, #041223 100%); color:#e6eef6; -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:32px;
-    }
+:root {
+  --accent: #ff6b6b;
+  --bg: #0f1724;
+  --card: #0b1117;
+  --muted: #9aa4b2;
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-2: rgba(255, 255, 255, 0.02);
+  --radius: 14px;
+  color-scheme: dark;
+}
 
-    /* Shell */
-    .demo-shell{
-      width:1600px; max-width:96vw; border-radius:18px; overflow:hidden; box-shadow: 0 10px 40px rgba(2,6,23,0.7);
-      display:grid; grid-template-columns: 1fr 360px; gap:0; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    }
+* {
+  box-sizing: border-box;
+}
 
-    /* Main preview */
-    .preview{
-      padding:28px; display:flex; flex-direction:column; gap:18px; background: linear-gradient(180deg, rgba(6,12,20,0.45), rgba(6,12,20,0.2));
-    }
-    .hero{
-      height:420px; border-radius:12px; overflow:hidden; position:relative; display:flex; align-items:end; justify-content:flex-start; background:#081223;
-    }
-    .hero .bg{position:absolute; inset:0; background-size:cover; background-position:center; filter:contrast(0.95) saturate(1.05); transform:scale(1.05);}
-    .hero .overlay{position:absolute; inset:0; background:linear-gradient(180deg, rgba(3,6,10,0.2) 0%, rgba(3,6,10,0.6) 60%);} 
-    .hero .meta{position:relative; z-index:3; padding:22px; display:flex; gap:16px; align-items:center}
-    .avatar{width:110px; height:110px; border-radius:12px; overflow:hidden; flex-shrink:0; box-shadow:0 6px 20px rgba(2,6,23,0.6);}
-    .avatar img{width:100%; height:100%; object-fit:cover; display:block}
-    .meta .txt{display:flex; flex-direction:column}
-    .meta h1{margin:0; font-size:26px; letter-spacing:0.4px}
-    .meta p{margin:6px 0 0; color:var(--muted); font-size:14px}
-    .meta .tags{margin-top:8px; display:flex; gap:8px}
-    .pill{padding:6px 10px; border-radius:999px; font-size:13px; background:var(--glass); color:var(--muted)}
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg, #071026 0%, #041223 100%);
+  color: #e6eef6;
+  transition: background 0.3s, color 0.3s;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  overflow-x: hidden;
+  max-width: 100%;
+}
 
-    /* Right toggles (desktop) */
-    .controls{
-      padding:28px; border-left:1px solid rgba(255,255,255,0.03); background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01)); display:flex; flex-direction:column; gap:18px;
-    }
-    .controls h3{margin:0 0 8px 0}
-    .toggles{display:flex; flex-direction:column; gap:12px}
-    .toggle-btn{
-      display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px; border-radius:10px; cursor:pointer; background:var(--glass-2);
-      border:1px solid rgba(255,255,255,0.02);
-    }
-    .toggle-btn.active{background:linear-gradient(90deg, rgba(255,107,107,0.12), rgba(255,107,107,0.06)); box-shadow:0 6px 20px rgba(255,107,107,0.06); border-color:rgba(255,107,107,0.18)}
+/* Shell */
+.demo-shell {
+  width: 1600px;
+  max-width: 96vw;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(2, 6, 23, 0.7);
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+}
 
-    .preview-body{display:flex; gap:20px}
-    .col{flex:1}
+/* Main preview */
+.preview {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: linear-gradient(180deg, rgba(6, 12, 20, 0.45), rgba(6, 12, 20, 0.2));
+}
 
-    /* Sections */
-    .section{margin-top:6px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); border-radius:12px; padding:16px; border:1px solid rgba(255,255,255,0.02);}    
-    .section h4{margin:0 0 8px 0}
+.hero {
+  height: 420px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: end;
+  justify-content: flex-start;
+  background: #081223;
+  width: 100%;
+  max-width: 100%;
+}
 
-    /* Events / Calendar */
-    .events-list{display:grid; gap:12px}
-    .event{display:flex; gap:12px; align-items:center; padding:10px; background:rgba(255,255,255,0.01); border-radius:10px}
-    .date{width:64px; text-align:center; padding:8px; background:rgba(255,255,255,0.02); border-radius:10px}
-    .date strong{display:block}
+.hero .bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: contrast(0.95) saturate(1.05);
+  transform: scale(1.05);
+}
 
-    /* Booking */
-    .booking .row{display:flex; gap:8px}
-    input, textarea{width:100%; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:inherit}
-    button.cta{background:linear-gradient(90deg,var(--accent),#ff8b6b); border:none; padding:10px 14px; color:#071023; border-radius:8px; font-weight:600; cursor:pointer}
+.hero .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(3, 6, 10, 0.2) 0%, rgba(3, 6, 10, 0.6) 60%);
+}
 
-    /* Shop */
-    .products{display:grid; grid-template-columns:repeat(2,1fr); gap:10px}
-    .product{padding:10px; border-radius:10px; background:rgba(255,255,255,0.01); display:flex; gap:10px; align-items:center}
-    .product img{width:64px; height:64px; object-fit:cover; border-radius:8px}
-    .price{font-weight:700}
+.hero .meta {
+  position: relative;
+  z-index: 3;
+  padding: 22px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
 
-    /* small footer preview */
-    .footer-preview{display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:12px; color:var(--muted); font-size:13px}
+.avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6);
+}
 
-    /* transitions */
-    .hidden{ display:none !important; }
-    .fade{
-      transition: all 240ms ease; opacity:1; transform:translateY(0);
-    }
-    .fade.hide{opacity:0; transform:translateY(8px); height:0; padding:0; margin:0; overflow:hidden}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
-    /* responsive */
-    @media (max-width:980px){
-      .demo-shell{grid-template-columns:1fr;}
-      .controls{order:2}
-      .preview{order:1}
-      .hero{height:320px}
-      .products{grid-template-columns:repeat(1,1fr)}
-    }
+.meta .txt {
+  display: flex;
+  flex-direction: column;
+}
 
+.meta h1 {
+  margin: 0;
+  font-size: 26px;
+  letter-spacing: 0.4px;
+}
 
-    /* Light theme overrides */
-    body.light-theme {
-      background: #fff;
-      color: #222;
-    }
+.meta p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
 
-    body.light-theme .demo-shell{
-      background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01));
-    }
+.meta .tags {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
 
-    body.light-theme .preview{
-      background: linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01));
-    }
+.pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  background: var(--glass);
+  color: var(--muted);
+}
 
-    body.light-theme .section{
-      background: #f7f7f7;
-      color: #111;
-      border-color: rgba(0,0,0,0.04);
-    }
+/* Right toggles (desktop) */
+.controls {
+  padding: 28px;
+  border-left: 1px solid rgba(255, 255, 255, 0.03);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0.01));
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 100%;
+}
 
-    body.light-theme .controls{
-      border-left-color: rgba(0,0,0,0.06);
-      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.98));
-    }
+.controls h3 {
+  margin: 0 0 8px 0;
+}
 
-    body.light-theme .pill{ background: rgba(0,0,0,0.04); color: #444 }
+.toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
-    .theme-toggle {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 50%;
-      font-size: 20px;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      transition: background 0.3s;
-      z-index:1100;
-      display:flex; align-items:center; justify-content:center;
-    }
-    body.light-theme .theme-toggle{ border-color: rgba(0,0,0,0.12) }
-    .theme-toggle:hover { background: rgba(255,255,255,0.03) }
+.toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  background: var(--glass-2);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+}
 
-    /* mobile bottom quick toggles (hidden on desktop) */
-    .mobile-toggle-bar{ display:none; }
+.toggle-btn.active {
+  background: linear-gradient(90deg, rgba(255, 107, 107, 0.12), rgba(255, 107, 107, 0.06));
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.06);
+  border-color: rgba(255, 107, 107, 0.18);
+}
 
-    @media (max-width:980px){
-      .theme-toggle{ right:10px; }
-      .mobile-toggle-bar{ display:flex; position:fixed; left:50%; transform:translateX(-50%); bottom:14px; gap:8px; z-index:1200; }
-      .mobile-toggle-bar button{ padding:10px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.06); background:var(--glass-2); cursor:pointer }
-      body.light-theme .mobile-toggle-bar button{ background: rgba(0,0,0,0.04); color: #111 }
-    }
+.preview-body {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
-  </style>
+.col {
+  flex: 1;
+  min-width: 280px;
+}
+
+/* Sections */
+.section {
+  margin-top: 6px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.02));
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  width: 100%;
+  max-width: 100%;
+}
+
+.section h4 {
+  margin: 0 0 8px 0;
+}
+
+/* Events / Calendar */
+.events-list {
+  display: grid;
+  gap: 12px;
+}
+
+.event {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.01);
+  border-radius: 10px;
+}
+
+.date {
+  width: 64px;
+  text-align: center;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+}
+
+.date strong {
+  display: block;
+}
+
+/* Booking */
+.booking .row {
+  display: flex;
+  gap: 8px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: transparent;
+  color: inherit;
+}
+
+button.cta {
+  background: linear-gradient(90deg, var(--accent), #ff8b6b);
+  border: none;
+  padding: 10px 14px;
+  color: #071023;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Shop */
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.product {
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.01);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.product img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.price {
+  font-weight: 700;
+}
+
+/* Footer preview */
+.footer-preview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* transitions */
+.hidden {
+  display: none !important;
+}
+
+.fade {
+  transition: all 240ms ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade.hide {
+  opacity: 0;
+  transform: translateY(8px);
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Light theme overrides */
+body.light-theme {
+  background: #fff;
+  color: #222;
+}
+
+body.light-mode {
+  background-color: white;
+  color: #121212;
+}
+
+body.light-theme .demo-shell {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.01));
+}
+
+body.light-theme .preview {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.01));
+}
+
+body.light-theme .section {
+  background: #f7f7f7;
+  color: #111;
+  border-color: rgba(0, 0, 0, 0.04);
+}
+
+body.light-theme .controls {
+  border-left-color: rgba(0, 0, 0, 0.06);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.98));
+}
+
+body.light-theme .pill {
+  background: rgba(0, 0, 0, 0.04);
+  color: #444;
+}
+
+/* Theme toggle */
+.theme-toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.light-theme .theme-toggle {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Mobile bottom quick toggles */
+.mobile-toggle-bar {
+  display: none;
+}
+
+@media (max-width: 980px) {
+  .demo-shell {
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .controls {
+    order: 2;
+  }
+
+  .preview {
+    order: 1;
+  }
+
+  .hero {
+    height: 320px;
+  }
+
+  .products {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .theme-toggle {
+    right: 10px;
+  }
+
+  .mobile-toggle-bar {
+    display: flex;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 14px;
+    gap: 8px;
+    z-index: 1200;
+  }
+
+  .mobile-toggle-bar button {
+    padding: 10px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: var(--glass-2);
+    cursor: pointer;
+  }
+
+  body.light-theme .mobile-toggle-bar button {
+    background: rgba(0, 0, 0, 0.04);
+    color: #111;
+  }
+}
+
+/* Keep perfect spacing on mobile */
+@media (max-width: 640px) {
+  body,
+  .demo-shell,
+  .preview,
+  .controls,
+  .section {
+    padding-left: 5px;
+    padding-right: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .portfolio,
+  .feature-toggles,
+  .hero {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 10px;
+  }
+}
+</style>
+
 </head>
 <body>
-  <!-- theme toggle (top-right) -->
+    <!-- theme toggle (top-right) -->
   <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
 
   <div class="demo-shell">
-    
     <div class="preview">
       <div class="hero" id="hero">
         <div class="bg" id="heroBg" style="background-image: url('/mnt/data/497431488_18505874374007788_2111393739857992774_n.jpg')"></div>
         <div class="overlay"></div>
         <div class="meta">
-          <div class="avatar"><img id="avatarImg" src="/mnt/data/516402405_18516190204007788_6135870814709536505_n.jpg" alt="Model"></div>
+          <div class="avatar">
+            <img id="avatarImg" src="/mnt/data/516402405_18516190204007788_6135870814709536505_n.jpg" alt="Model" />
+          </div>
           <div class="txt">
             <h1 id="modelName">Lina Karchaoui</h1>
             <p id="modelTag">Model • Creator • Brand Collaborator</p>
-            <div class="tags"><span class="pill">+3 yrs experience</span><span class="pill">Available for hire</span></div>
+            <div class="tags">
+              <span class="pill">+3 yrs experience</span>
+              <span class="pill">Available for hire</span>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="preview-body">
         <div class="col">
-          <div class="section" id="about">
-            <h4>About</h4>
-            <p style="color:var(--muted)">A passionate model and creator with a focus on sports and lifestyle shoots. Professional, reliable, and ready for collaboration. This demo shows how optional sections (Calendar, Booking, Shop) can be toggled on/off to match the features you purchase.</p>
-          </div>
-
-          <div class="section fade" id="calendarSection">
-            <h4>Upcoming Events</h4>
-            <div class="events-list">
-              <div class="event"><div class="date"><strong>12</strong><small>Oct</small></div><div><strong>Brand Shoot - Nike</strong><div style="color:var(--muted);font-size:13px">Paris — 10:00 AM</div></div></div>
-              <div class="event"><div class="date"><strong>24</strong><small>Nov</small></div><div><strong>Fashion Week</strong><div style="color:var(--muted);font-size:13px">London — 6:00 PM</div></div></div>
-              <div class="event"><div class="date"><strong>03</strong><small>Dec</small></div><div><strong>Collab Shoot</strong><div style="color:var(--muted);font-size:13px">Remote — TBA</div></div></div>
-            </div>
-          </div>
-
-          <div class="section fade" id="bookingSection">
-            <h4>Booking</h4>
-            <p style="color:var(--muted); margin-top:0">Interested in booking the model? Fill out the form below and we'll send a booking request.</p>
-            <div class="booking">
-              <div class="row"><input placeholder="Your name" id="bkName"></div>
-              <div class="row" style="margin-top:8px;"><input placeholder="Company / Brand" id="bkCompany"></div>
-              <div style="margin-top:8px;"><textarea rows="4" placeholder="Project details & dates" id="bkDetails"></textarea></div>
-              <div style="margin-top:10px; display:flex; gap:8px; align-items:center"><button class="cta" id="sendBooking">Send Request</button><span style="color:var(--muted); font-size:13px">Demo only — submissions disabled</span></div>
-            </div>
-          </div>
-
-          <div class="section fade" id="shopSection">
-            <h4>Shop</h4>
-            <div class="products">
-              <div class="product"><img src="/mnt/data/516402405_18516190204007788_6135870814709536505_n.jpg" alt="p"><div><strong>Signature Cap</strong><div style="color:var(--muted); font-size:13px">Limited edition</div></div><div style="margin-left:auto;text-align:right"><div class="price">$25</div><div style="font-size:12px;color:var(--muted)">Out of stock</div></div></div>
-              <div class="product"><img src="/mnt/data/497431488_18505874374007788_2111393739857992774_n.jpg" alt="p"><div><strong>Autographed Print</strong><div style="color:var(--muted); font-size:13px">A4 glossy</div></div><div style="margin-left:auto;text-align:right"><div class="price">$40</div><div style="font-size:12px;color:var(--muted)">Ships in 3-5 days</div></div></div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col" style="width:340px; max-width:340px">
+          <!-- Portfolio section moved here -->
           <div class="section">
             <h4>Portfolio</h4>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px">
-              <img src="photo1.jpg" style="width:100%; height:100px; object-fit:cover; border-radius:8px">
-              <img src="photo2.jpg" style="width:100%; height:100px; object-fit:cover; border-radius:8px">
-              <img src="photo3.jpg" style="width:100%; height:100px; object-fit:cover; border-radius:8px">
-              <img src="photo4.jpg" style="width:100%; height:100px; object-fit:cover; border-radius:8px">
+              <img src="photo1.jpg" style="width:100%; height:100px; object-fit:cover; border-radius:8px" />
+              <img src="photo2.jpg" style="width:100%; height:100px; object-fit:cover; border-radius:8px" />
+              <img src="photo3.jpg" style="width:100%; height:100px; object-fit:cover; border-radius:8px" />
+              <img src="photo4.jpg" style="width:100%; height:100px; object-fit:cover; border-radius:8px" />
             </div>
-            <div style="margin-top:12px; color:var(--muted); font-size:13px">This section showcases sample images — replace with your own gallery once you buy the full package.</div>
+            <div style="margin-top:12px; color:var(--muted); font-size:13px">
+              This section showcases sample images — replace with your own gallery once you buy the full package.
+            </div>
           </div>
 
+          <!-- About section -->
+          <div class="section" id="about">
+            <h4>About</h4>
+            <p style="color:var(--muted)">
+              A passionate model and creator with a focus on sports and lifestyle shoots. Professional, reliable, and ready for collaboration.
+              This demo shows how optional sections (Calendar, Booking, Shop) can be toggled on/off to match the features you purchase.
+            </p>
+          </div>
+          <!-- Socials-->
+<div class="col" style="width:340px; max-width:340px">
           <div class="section" style="margin-top:12px">
             <h4>Socials</h4>
             <div style="display:flex; gap:8px; margin-top:8px">
@@ -235,8 +522,77 @@
               <a href="#" style="text-decoration:none"><div class="pill">TikTok</div></a>
             </div>
           </div>
-
         </div>
+          <!--End of Socials-->
+
+          <!-- Calendar section -->
+          <div class="section fade" id="calendarSection">
+            <h4>Upcoming Events</h4>
+            <div class="events-list">
+              <div class="event">
+                <div class="date"><strong>12</strong><small>Oct</small></div>
+                <div><strong>Brand Shoot - Nike</strong><div style="color:var(--muted);font-size:13px">Paris — 10:00 AM</div></div>
+              </div>
+              <div class="event">
+                <div class="date"><strong>24</strong><small>Nov</small></div>
+                <div><strong>Fashion Week</strong><div style="color:var(--muted);font-size:13px">London — 6:00 PM</div></div>
+              </div>
+              <div class="event">
+                <div class="date"><strong>03</strong><small>Dec</small></div>
+                <div><strong>Collab Shoot</strong><div style="color:var(--muted);font-size:13px">Remote — TBA</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Booking section -->
+          <div class="section fade" id="bookingSection">
+            <h4>Booking</h4>
+            <p style="color:var(--muted); margin-top:0">
+              Interested in booking the model? Fill out the form below and we'll send a booking request.
+            </p>
+            <div class="booking">
+              <div class="row"><input placeholder="Your name" id="bkName" /></div>
+              <div class="row" style="margin-top:8px;"><input placeholder="Company / Brand" id="bkCompany" /></div>
+              <div style="margin-top:8px;"><textarea rows="4" placeholder="Project details & dates" id="bkDetails"></textarea></div>
+              <div style="margin-top:10px; display:flex; gap:8px; align-items:center">
+                <button class="cta" id="sendBooking">Send Request</button>
+                <span style="color:var(--muted); font-size:13px">Demo only — submissions disabled</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shop section -->
+          <div class="section fade" id="shopSection">
+            <h4>Shop</h4>
+            <div class="products">
+              <div class="product">
+                <img src="/mnt/data/516402405_18516190204007788_6135870814709536505_n.jpg" alt="p" />
+                <div>
+                  <strong>Signature Cap</strong>
+                  <div style="color:var(--muted); font-size:13px">Limited edition</div>
+                </div>
+                <div style="margin-left:auto;text-align:right">
+                  <div class="price">$25</div>
+                  <div style="font-size:12px;color:var(--muted)">Out of stock</div>
+                </div>
+              </div>
+              <div class="product">
+                <img src="/mnt/data/497431488_18505874374007788_2111393739857992774_n.jpg" alt="p" />
+                <div>
+                  <strong>Autographed Print</strong>
+                  <div style="color:var(--muted); font-size:13px">A4 glossy</div>
+                </div>
+                <div style="margin-left:auto;text-align:right">
+                  <div class="price">$40</div>
+                  <div style="font-size:12px;color:var(--muted)">Ships in 3-5 days</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right column -->
+     
       </div>
 
       <div class="footer-preview">
@@ -245,10 +601,13 @@
       </div>
     </div>
 
+    <!-- Sidebar Controls -->
     <aside class="controls">
       <div>
         <h3>Feature Toggles</h3>
-        <div style="color:var(--muted); font-size:13px">Show or hide optional website sections to preview pricing tiers</div>
+        <div style="color:var(--muted); font-size:13px">
+          Show or hide optional website sections to preview pricing tiers
+        </div>
       </div>
 
       <div class="toggles">
@@ -280,15 +639,22 @@
       <div style="margin-top:8px">
         <h4>Quick edits</h4>
         <div style="display:flex; gap:8px; margin-top:8px">
-          <input id="nameInput" placeholder="Change name" style="flex:1; padding:8px; border-radius:8px; background:transparent; border:1px solid rgba(255,255,255,0.03); color:inherit">
+          <input id="nameInput" placeholder="Change name" style="flex:1; padding:8px; border-radius:8px; background:transparent; border:1px solid rgba(255,255,255,0.03); color:inherit" />
           <button class="cta" id="applyName">Apply</button>
         </div>
-        <div style="margin-top:8px; color:var(--muted); font-size:13px">You can also change the hero background and avatar with the small gallery in the preview.</div>
+        <div style="margin-top:8px; color:var(--muted); font-size:13px">
+          You can also change the hero background and avatar with the small gallery in the preview.
+        </div>
       </div>
 
       <div style="margin-top:auto; font-size:13px; color:var(--muted)">
-        <div style="margin-bottom:8px">Plans: <strong>Simple</strong> | <strong>Creator Pro</strong> (demo)</div>
-        <div style="display:flex; gap:8px"><button class="cta" style="flex:1">Use this template</button><button style="padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)">Download</button></div>
+        <div style="margin-bottom:8px">
+          Plans: <strong>Simple</strong> | <strong>Creator Pro</strong> (demo)
+        </div>
+        <div style="display:flex; gap:8px">
+          <button class="cta" style="flex:1">Use this template</button>
+          <button style="padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)">Download</button>
+        </div>
       </div>
     </aside>
   </div>
@@ -368,5 +734,49 @@
     // (they'll mirror desktop via click events when used)
 
   </script>
+
+  <script>
+  // Select the toggle button
+  const toggleButton = document.getElementById('theme-toggle');
+
+  // Check if user has a saved theme preference
+  const savedTheme = localStorage.getItem('theme');
+
+  // Apply saved theme or default to dark
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-mode');
+  } else {
+    document.body.classList.remove('light-mode'); // dark is default
+  }
+
+  // Update button icon/text if you have one (optional)
+  updateToggleIcon();
+
+  // Add event listener for toggle
+  toggleButton.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+
+    // Save theme to localStorage
+    if (document.body.classList.contains('light-mode')) {
+      localStorage.setItem('theme', 'light');
+    } else {
+      localStorage.setItem('theme', 'dark');
+    }
+
+    updateToggleIcon();
+  });
+
+  // Optional: change icon/text depending on mode
+  function updateToggleIcon() {
+    if (toggleButton) {
+      if (document.body.classList.contains('light-mode')) {
+        toggleButton.textContent = '🌞'; // light mode icon
+      } else {
+        toggleButton.textContent = '🌙'; // dark mode icon
+      }
+    }
+  }
+</script>
+
 </body>
 </html>
