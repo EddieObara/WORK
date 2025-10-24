@@ -453,6 +453,166 @@ body.light-theme .theme-toggle {
     padding: 0 10px;
   }
 }
+
+
+/* =========================================
+   ✅ LIGHT THEME OVERRIDES (Clean & Polished)
+   ========================================= */
+body.light-theme {
+  --bg: #ffffff;
+  --text: #111111;
+  --muted: #555555;
+  background: #ffffff;
+  color: #111111;
+}
+
+/* Sections / Boxes / Cards */
+body.light-theme .section,
+body.light-theme .controls,
+body.light-theme .preview,
+body.light-theme .feature-toggles,
+body.light-theme .portfolio,
+body.light-theme .about,
+body.light-theme .footer-preview,
+body.light-theme .toggles .toggle-btn {
+  background: #ffffff !important;
+  border: 1px solid #e5e5e5 !important;
+  color: #111111 !important;
+}
+
+/* Buttons */
+body.light-theme .cta {
+  background: #111;
+  color: #fff;
+}
+
+/* Portfolio images still look clean */
+body.light-theme img {
+  border-radius: 8px;
+}
+
+/* Make text readable */
+body.light-theme h1,
+body.light-theme h2,
+body.light-theme h3,
+body.light-theme h4,
+body.light-theme p,
+body.light-theme strong,
+body.light-theme input,
+body.light-theme textarea {
+  color: #111111 !important;
+}
+
+/* Pills / Social Buttons */
+body.light-theme .pill {
+  background: #111;
+  color: #ffffff;
+}
+
+/* Sidebar toggle states */
+body.light-theme .toggle-btn.active {
+  background: #f7f7f7 !important;
+}
+
+/* Hero overlay should still stay dark-ish for contrast */
+body.light-theme .hero .overlay {
+  background: rgba(0,0,0,0.25) !important;
+}
+
+/* Light theme hero text fix */
+body.light-theme .hero .txt h1,
+body.light-theme .hero .txt p,
+body.light-theme .hero .pill,
+body.light-theme .hero .tags span {
+  color: #ffffff !important;
+}
+
+body.light-theme .hero .pill {
+  background: rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* Add spacing inside all section blocks */
+.section {
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+/* But do NOT apply padding to the portfolio image grid */
+.section h4 {
+  margin-left: 4px; /* Slight push for titles */
+}
+
+/* Portfolio-specific rule: keep images flush */
+.section h4:contains("Portfolio") { 
+  margin-left: 4px; /* Title shifts slightly */
+}
+
+/* Add comfortable spacing to section headings + text */
+.section h4 {
+  margin-left: 14px;
+}
+
+.section p,
+.section .pill,
+.section > div:not([style*="grid-template"]) {
+  margin-left: 14px;
+}
+
+/* Ensure portfolio image grid stays aligned perfectly */
+.section div[style*="grid-template-columns"] {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* Make Feature Toggles visually match other sections */
+.controls {
+  background: var(--glass);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 20px;
+}
+
+/* Light mode match */
+body.light-theme .controls {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: #111;
+}
+
+/* Add spacing between "Feature Toggles" title & items */
+.controls h3 {
+  margin-bottom: 10px;
+}
+
+/* Slight padding to push content away from edges */
+.controls > div,
+.controls .toggles {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+/* Remove demo-shell shadow only on mobile */
+@media (max-width: 768px) {
+  .demo-shell {
+    box-shadow: none !important;
+  }
+}
+
+/* Date block border styling */
+.date {
+  border-top: 4px solid #ffffff; /* White for dark mode */
+}
+
+/* Light Mode Override */
+body.light-theme .date {
+  border-top: 4px solid #000000; /* Black for light mode */
+}
+
+
+/* If :contains doesn't work in your environment, use a class instead — see below */
+
 </style>
 
 </head>
@@ -473,7 +633,6 @@ body.light-theme .theme-toggle {
             <h1 id="modelName">Lina Karchaoui</h1>
             <p id="modelTag">Model • Creator • Brand Collaborator</p>
             <div class="tags">
-              <span class="pill">+3 yrs experience</span>
               <span class="pill">Available for hire</span>
             </div>
           </div>
@@ -505,7 +664,7 @@ body.light-theme .theme-toggle {
             </p>
           </div>
           <!-- Socials-->
-<div class="col" style="width:340px; max-width:340px">
+    <div class="col" style="width:340px; max-width:340px">
           <div class="section" style="margin-top:12px">
             <h4>Socials</h4>
             <div style="display:flex; gap:8px; margin-top:8px">
@@ -557,7 +716,7 @@ body.light-theme .theme-toggle {
             <h4>Shop</h4>
             <div class="products">
               <div class="product">
-                <img src="/mnt/data/516402405_18516190204007788_6135870814709536505_n.jpg" alt="p" />
+                <img src="/models/cap.jpg" alt="p" />
                 <div>
                   <strong>Signature Cap</strong>
                   <div style="color:var(--muted); font-size:13px">Limited edition</div>
@@ -568,7 +727,7 @@ body.light-theme .theme-toggle {
                 </div>
               </div>
               <div class="product">
-                <img src="/mnt/data/497431488_18505874374007788_2111393739857992774_n.jpg" alt="p" />
+                <img src="/models/dress.jpg" alt="p" />
                 <div>
                   <strong>Autographed Print</strong>
                   <div style="color:var(--muted); font-size:13px">A4 glossy</div>
@@ -593,6 +752,7 @@ body.light-theme .theme-toggle {
     </div>
 
     <!-- Sidebar Controls -->
+     
     <aside class="controls">
       <div>
         <h3>Feature Toggles</h3>
@@ -738,6 +898,18 @@ body.light-theme .theme-toggle {
       themeBtn.textContent = "🌙";
     }
   });
+
+  // ===========================
+// ✅ Set Default Preview Image on Page Load
+// ===========================
+window.addEventListener('DOMContentLoaded', () => {
+  const defaultImage = document.querySelector('.col img'); // first image in gallery
+  if (defaultImage) {
+    document.getElementById('heroBg').style.backgroundImage = `url('${defaultImage.src}')`;
+    document.getElementById('avatarImg').src = defaultImage.src;
+  }
+});
+
 </script>
 
 </body>
