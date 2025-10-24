@@ -90,7 +90,7 @@ body {
 .hero .meta {
   position: relative;
   z-index: 3;
-  padding: 22px;
+  padding: 10px;
   display: flex;
   gap: 16px;
   align-items: center;
@@ -322,15 +322,6 @@ button.cta {
 }
 
 /* Light theme overrides */
-body.light-theme {
-  background: #fff;
-  color: #222;
-}
-
-body.light-mode {
-  background-color: white;
-  color: #121212;
-}
 
 body.light-theme .demo-shell {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.01));
@@ -446,11 +437,11 @@ body.light-theme .theme-toggle {
   .preview,
   .controls,
   .section {
-    padding-left: 6px;
+    padding-left: 0px;
     padding-right: 13px;
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
+    width: 98%;
     max-width: 100%;
   }
 
@@ -467,7 +458,7 @@ body.light-theme .theme-toggle {
 </head>
 <body>
     <!-- theme toggle (top-right) -->
-  <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+<button id="themeToggle" class="theme-toggle">☀️</button>
 
   <div class="demo-shell">
     <div class="preview">
@@ -667,115 +658,86 @@ body.light-theme .theme-toggle {
   </div>
 
   <script>
-    // Toggle logic (desktop toggles)
-    document.querySelectorAll('.toggle-btn').forEach(btn => {
-      btn.addEventListener('click', ()=>{
-        const target = document.getElementById(btn.dataset.target);
-        const isActive = btn.classList.toggle('active');
-        btn.querySelector('.status').textContent = isActive ? 'On' : 'Off';
+  // Toggle logic (desktop toggles)
+  document.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', ()=>{
+      const target = document.getElementById(btn.dataset.target);
+      const isActive = btn.classList.toggle('active');
+      btn.querySelector('.status').textContent = isActive ? 'On' : 'Off';
 
-        // animate hide/show
-        if(!isActive){
-          target.classList.add('hide');
-          setTimeout(()=> target.classList.add('hidden'), 260);
-        } else {
-          target.classList.remove('hidden');
-          setTimeout(()=> target.classList.remove('hide'), 10);
-        }
-      })
+      // animate hide/show
+      if(!isActive){
+        target.classList.add('hide');
+        setTimeout(()=> target.classList.add('hidden'), 260);
+      } else {
+        target.classList.remove('hidden');
+        setTimeout(()=> target.classList.remove('hide'), 10);
+      }
     })
-
-    // Mobile quick toggles: mirror desktop behavior
-    document.querySelectorAll('.mobile-toggle').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const targetId = btn.dataset.target;
-        // find the corresponding desktop toggle (if any) to sync status
-        const desktop = document.querySelector(`.toggle-btn[data-target="${targetId}"]`);
-        if(desktop){ desktop.click(); }
-        // give quick feedback by toggling a pressed style
-        btn.classList.toggle('pressed');
-      })
-    });
-
-    // allow clicking small images to change hero/ avatar
-    document.querySelectorAll('.col img').forEach(img => {
-      img.style.cursor='pointer';
-      img.addEventListener('click', ()=>{
-        document.getElementById('heroBg').style.backgroundImage = `url('${img.src}')`;
-        document.getElementById('avatarImg').src = img.src;
-      })
-    })
-
-    // apply name
-    document.getElementById('applyName').addEventListener('click', ()=>{
-      const v = document.getElementById('nameInput').value.trim();
-      if(v) document.getElementById('modelName').textContent = v;
-    })
-
-    // booking button demo
-    document.getElementById('sendBooking').addEventListener('click', ()=>{
-      alert('This is a demo preview. Real booking will be available on the live package.');
-    })
-
-    // initialize fade classes
-    ['calendarSection','bookingSection','shopSection'].forEach(id=>{
-      const el = document.getElementById(id);
-      if(el) el.classList.add('fade');
-    });
-
-    // Theme toggle
-    const themeBtn = document.getElementById('themeToggle');
-    themeBtn.addEventListener('click', () => {
-      document.body.classList.toggle('light-theme');
-      themeBtn.textContent = document.body.classList.contains('light-theme') ? '🌞' : '🌙';
-    });
-
-    // ensure mobile toggle bar buttons sync initial state (all active by default)
-    // (they'll mirror desktop via click events when used)
-
-  </script>
-
-  <script>
-  // Select the toggle button
-  const toggleButton = document.getElementById('theme-toggle');
-
-  // Check if user has a saved theme preference
-  const savedTheme = localStorage.getItem('theme');
-
-  // Apply saved theme or default to dark
-  if (savedTheme === 'light') {
-    document.body.classList.add('light-mode');
-  } else {
-    document.body.classList.remove('light-mode'); // dark is default
-  }
-
-  // Update button icon/text if you have one (optional)
-  updateToggleIcon();
-
-  // Add event listener for toggle
-  toggleButton.addEventListener('click', () => {
-    document.body.classList.toggle('light-mode');
-
-    // Save theme to localStorage
-    if (document.body.classList.contains('light-mode')) {
-      localStorage.setItem('theme', 'light');
-    } else {
-      localStorage.setItem('theme', 'dark');
-    }
-
-    updateToggleIcon();
   });
 
-  // Optional: change icon/text depending on mode
-  function updateToggleIcon() {
-    if (toggleButton) {
-      if (document.body.classList.contains('light-mode')) {
-        toggleButton.textContent = '🌞'; // light mode icon
-      } else {
-        toggleButton.textContent = '🌙'; // dark mode icon
-      }
-    }
+  // Mobile quick toggles: mirror desktop behavior
+  document.querySelectorAll('.mobile-toggle').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const targetId = btn.dataset.target;
+      const desktop = document.querySelector(`.toggle-btn[data-target="${targetId}"]`);
+      if(desktop){ desktop.click(); }
+      btn.classList.toggle('pressed');
+    })
+  });
+
+  // Clicking preview images updates hero + avatar
+  document.querySelectorAll('.col img').forEach(img => {
+    img.style.cursor='pointer';
+    img.addEventListener('click', ()=>{
+      document.getElementById('heroBg').style.backgroundImage = `url('${img.src}')`;
+      document.getElementById('avatarImg').src = img.src;
+    })
+  });
+
+  // Apply model name
+  document.getElementById('applyName').addEventListener('click', ()=>{
+    const v = document.getElementById('nameInput').value.trim();
+    if(v) document.getElementById('modelName').textContent = v;
+  });
+
+  // Booking demo alert
+  document.getElementById('sendBooking').addEventListener('click', ()=>{
+    alert('This is a demo preview. Real booking will be available on the live package.');
+  });
+
+  // Initialize fade sections
+  ['calendarSection','bookingSection','shopSection'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.classList.add('fade');
+  });
+
+  /* ===========================
+     ✅ THEME TOGGLE (FINAL FIX)
+     =========================== */
+
+  const themeBtn = document.getElementById('themeToggle');
+
+  // Apply saved theme on load
+  if (localStorage.getItem("theme") === "light-theme") {
+    document.body.classList.add("light-theme");
+    themeBtn.textContent = "🌞";
+  } else {
+    themeBtn.textContent = "🌙"; // default dark mode icon
   }
+
+  themeBtn.addEventListener('click', () => {
+    document.body.classList.toggle("light-theme");
+
+    // Save preference
+    if (document.body.classList.contains("light-theme")) {
+      localStorage.setItem("theme", "light-theme");
+      themeBtn.textContent = "🌞";
+    } else {
+      localStorage.removeItem("theme");
+      themeBtn.textContent = "🌙";
+    }
+  });
 </script>
 
 </body>
